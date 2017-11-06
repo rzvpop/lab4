@@ -42,4 +42,26 @@ class Book:
                + "Description: " + self._desc
 
 
+def testBook():
+    b = Book(3, "10 big niggers", "detective Fictionwad", "agatha Cristie")
 
+    assert(isinstance(b, Book))
+
+    assert(b.id == 3)
+    assert(b.title == "10 big niggers")
+    assert(b.author == "agatha Cristie")
+    assert(b.desc == "detective Fictionwad")
+
+    b._id = 1
+    b.title = "10 little niggers"
+    b.author = "Agatha Cristie"
+    b.desc = "detective fiction"
+
+    assert(b.id == 1)
+    assert(b.title == "10 little niggers")
+    assert(b.author == "Agatha Cristie")
+    assert(b.desc == "detective fiction")
+
+    assert(b.__str__() == "#1 Title: '10 little niggers' | Author: Agatha Cristie | Description: detective fiction")
+
+testBook()

@@ -1,4 +1,4 @@
-from domanin.book import Book
+from domain.book import Book
 
 
 def run():
