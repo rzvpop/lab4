@@ -37,6 +37,9 @@ class Book:
     def author(self, value):
         self._author = value
 
+    def __eq__(self, b):
+        return self._id == b.id
+
     def __str__(self):
         return "#" + str(self._id) + " Title: '" + self._title + "' | " + "Author: " + self._author + " | "\
                + "Description: " + self._desc
