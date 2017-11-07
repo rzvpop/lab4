@@ -1,23 +1,23 @@
 class Client:
     def __init__(self, id, name):
-        self._id = id
-        self._name = name
+        self.__id = id
+        self.__name = name
 
     @property
     def id(self):
-        return self._id
+        return self.__id
 
     @id.setter
     def id(self, value):
-        self._id = value
+        self.__id = value
 
     @property
     def name(self):
-        return self._name
+        return self.__name
 
     @name.setter
     def name(self, value):
-        self._name = value
+        self.__name = value
 
     def __str__(self):
-        return "#" + str(self._id) + "Nume: " + self._name
+        return "#" + str(self.__id) + "Nume: " + self.__name

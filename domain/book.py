@@ -1,70 +1,48 @@
 class Book:
     def __init__(self, id = 0, title = "", desc = "", author = ""):
-        self._id = id
-        self._title = title
-        self._desc = desc
-        self._author = author
+        self.__id = id
+        self.__title = title
+        self.__desc = desc
+        self.__author = author
 
     @property
     def id(self):
-        return self._id
+        return self.__id
 
     @id.setter
     def id(self, value):
-        self._id = value
+        self.__id = value
 
     @property
     def title(self):
-        return self._title
+        return self.__title
 
     @title.setter
     def title(self, value):
-        self._title = value
+        self.__title = value
 
     @property
     def desc(self):
-        return self._desc
+        return self.__desc
 
     @desc.setter
     def desc(self, value):
-        self._desc = value
+        self.__desc = value
 
     @property
     def author(self):
-        return self._author
+        return self.__author
 
     @author.setter
     def author(self, value):
-        self._author = value
+        self.__author = value
 
-    def __eq__(self, b):
-        return self._id == b.id
+    def __eq__(self, other):
+        if isinstance(other,self.__class__):
+            return self.__id == other.__id
+        else:
+            return False
 
     def __str__(self):
-        return "#" + str(self._id) + " Title: '" + self._title + "' | " + "Author: " + self._author + " | "\
-               + "Description: " + self._desc
-
-
-def testBook():
-    b = Book(3, "10 big niggers", "detective Fictionwad", "agatha Cristie")
-
-    assert(isinstance(b, Book))
-
-    assert(b.id == 3)
-    assert(b.title == "10 big niggers")
-    assert(b.author == "agatha Cristie")
-    assert(b.desc == "detective Fictionwad")
-
-    b._id = 1
-    b.title = "10 little niggers"
-    b.author = "Agatha Cristie"
-    b.desc = "detective fiction"
-
-    assert(b.id == 1)
-    assert(b.title == "10 little niggers")
-    assert(b.author == "Agatha Cristie")
-    assert(b.desc == "detective fiction")
-
-    assert(b.__str__() == "#1 Title: '10 little niggers' | Author: Agatha Cristie | Description: detective fiction")
-
-testBook()
+        return "#" + str(self.__id) + " Title: '" + self.__title + "' | " + "Author: " + self.__author + " | "\
+               + "Description: " + self.__desc
