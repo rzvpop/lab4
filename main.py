@@ -1,13 +1,9 @@
-from domain.book import Book
+from repository.Repo import BookRepo
+from controller.controller import Controller
+
 
 def run():
-    b1 = Book(1, "Tow Sawyer", "faina, ma", "Mark Twain")
-
-    print(b1)
-
-    b1.desc = "chiar faina"
-    print(b1.desc)
-
-    print(Book())
+    repo = BookRepo()
+    cont = Controller()
 
 run()
