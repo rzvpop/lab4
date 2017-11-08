@@ -17,3 +17,14 @@ class Validator():
 
         if len(errors) > 0:
             raise ValidationExcention(errors)
+
+    def validateClient(self, client):
+        errors = ""
+
+        if client.id < 0:
+            errors += "Invalid id!\n"
+        if client.name == "":
+            errors += "Invalid name!\n"
+
+        if len(errors) > 0:
+            raise ValidationExcention(errors)

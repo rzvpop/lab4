@@ -19,5 +19,11 @@ class Client:
     def name(self, value):
         self.__name = value
 
+    def __eq__(self, other):
+        if isinstance(other,self.__class__):
+            return self.__id == other.__id
+        else:
+            return False
+
     def __str__(self):
-        return "#" + str(self.__id) + "Nume: " + self.__name
+        return "#" + str(self.__id) + " Nume: " + self.__name

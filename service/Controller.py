@@ -1,4 +1,5 @@
 from domain.book import Book
+from domain.client import Client
 from validation.Validator import Validator
 
 
@@ -15,7 +16,7 @@ class Controller():
         self.__book_repo.add(b)
 
     def removeBook(self, id):
-        b = Book(id, "defalut", "defalut", "defalut")
+        b = Book(id, "default", "default", "default")
         self.__validator.validateBook(b)
         self.__book_repo.rem(b)
 
@@ -26,3 +27,21 @@ class Controller():
 
     def getBooks(self):
         return self.__book_repo.getAll()
+
+    def addClient(self, args):
+        c = Client(int(args[0]), args[1])
+        self.__validator.validateClient(c)
+        self.__client_repo.add(c)
+
+    def getClients(self):
+        return self.__client_repo.getAll()
+
+    def removeClient(self, id):
+        c = Client(id, "default")
+        self.__validator.validateClient(c)
+        self.__client_repo.rem(c)
+
+    def updateClient(self, args):
+        c = Client(int(args[0]), args[1])
+        self.__validator.validateClient(c)
+        self.__client_repo.upd(c)
