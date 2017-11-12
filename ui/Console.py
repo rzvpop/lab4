@@ -38,7 +38,11 @@ class Console:
         self.__ctrl.updateBook(args)
         print("Book updated!")
 
-    def addClient(self, args):
+    def addClient(self):
+        id = input("Id: ")
+        name = input("Name: ")
+        args = [id, name]
+
         self.__ctrl.addClient(args)
         print("Client added!")
 
@@ -48,18 +52,28 @@ class Console:
         if len(clients) == 0:
             print("No clients!")
             return
-
         for x in clients:
             print(x, '\n')
+
+    def removeClient(self, args):
+        self.__ctrl.removeClient(args[0])
+        print("Client removed!")
+
+    def updateClient(self, args):
+        self.__ctrl.updateClient(args)
+        print("Client updated!")
 
     def syntaxDict(self):
         d = {
             "add_book": r"^\s*add\s*book\s*$",
             "list_books": r"^\s*list\s*books\s*$",
             "remove_book": r"^\s*remove\s*book\s*([0-9]+)\s*$",
-            "update_book": r"^\s*update\s*book\s*([0-9]+)\s*([a-zA-Z0-9]+)\s*([a-zA-Z0-9]+)\s*([a-zA-Z0-9]+)\s*$",
-            "add_client": r"^\s*add\s*client\s*([0-9]+)\s*([a-zA-Z0-9]+)\s*$",
+            "update_book": r"^\s*update\s*book\s*"
+                           r"([0-9\s]+)\s*,\s*([a-zA-Z0-9\s]+)\s*,\s*([a-zA-Z0-9\s]+)\s*,\s*([a-zA-Z0-9\s]+)\s*$",
+            "add_client": r"^\s*add\s*client\s*$",
             "list_clients": r"^\s*list\s*clients\s*$",
+            "remove_client": r"^\s*remove\s*client\s*([0-9]+)\s*$",
+            "update_client": r"^\s*update\s*client\s*([0-9\s]+)\s*,\s*([a-zA-Z0-9\s]+)\s*",
             "exit": r"^\s*exit\s*$"
         }
         return d
@@ -71,7 +85,9 @@ class Console:
              ["remove_book", self.removeBook, True],
              ["update_book", self.updateBook, True],
              ["add_client", self.addClient, True],
-             ["list_clients", self.listClients]]
+             ["list_clients", self.listClients],
+             ["remove_client", self.removeClient, True],
+             ["update_client", self.updateClient, True]]
         return l
 
     def run(self):
@@ -93,12 +109,12 @@ class Console:
                             if len(matches.groups()) >= 1:
                                 try:
                                     i[1](matches.groups())
-                                except LibraryException as ex:
+                                except Exception as ex:
                                     print(ex)
                             else:
                                 try:
                                     i[1]()
-                                except LibraryException as ex:
+                                except Exception as ex:
                                     print(ex)
             if not found:
                 print("Invalid command syntax!")

@@ -38,7 +38,7 @@ class Book:
         self.__author = value
 
     def __eq__(self, other):
-        if isinstance(other,self.__class__):
+        if isinstance(other, self.__class__):
             return self.__id == other.__id
         else:
             return False

@@ -16,7 +16,7 @@ class Controller():
         self.__book_repo.add(b)
 
     def removeBook(self, id):
-        b = Book(id, "default", "default", "default")
+        b = Book(int(id), "default", "default", "default")
         self.__validator.validateBook(b)
         self.__book_repo.rem(b)
 
@@ -37,7 +37,7 @@ class Controller():
         return self.__client_repo.getAll()
 
     def removeClient(self, id):
-        c = Client(id, "default")
+        c = Client(int(id), "default")
         self.__validator.validateClient(c)
         self.__client_repo.rem(c)
 
@@ -45,3 +45,6 @@ class Controller():
         c = Client(int(args[0]), args[1])
         self.__validator.validateClient(c)
         self.__client_repo.upd(c)
+
+    def adfdRental(self, args):
+        pass

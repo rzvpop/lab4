@@ -1,3 +1,6 @@
+from datetime import date
+
+
 class Rental:
     def __init__(self, id, book_id, client_id, ren_date, due_date, ret_date):
         self.__id = id
@@ -54,6 +57,22 @@ class Rental:
     @retDate.setter
     def retDate(self, value):
         self.__ret_date = value
+
+    def rentState(self):
+        state = {"ret": False, "late": False}
+
+        if self.__ret_date != False:
+            state["ret"] = True
+            if date.today() > self.__due_date:
+                state["late"] = True
+
+        return state
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.__id == other.__id
+        else:
+            return False
 
     #schimb id cu numele
     def __str__(self):
