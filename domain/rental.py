@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 
 class Rental:
@@ -63,7 +63,7 @@ class Rental:
 
         if self.__ret_date != False:
             state["ret"] = True
-            if date.today() > self.__due_date:
+            if datetime.now() > self.__due_date:
                 state["late"] = True
 
         return state
