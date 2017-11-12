@@ -1,5 +1,10 @@
+from datetime import date, datetime
+
 from domain.book import Book
 from domain.client import Client
+from domain.exceptions import LibraryException
+from domain.rental import Rental
+from repository.Repository import Repository
 from validation.Validator import Validator
 
 
@@ -46,5 +51,25 @@ class Controller():
         self.__validator.validateClient(c)
         self.__client_repo.upd(c)
 
-    def adfdRental(self, args):
-        pass
+    def isAvailable(self, book_id):
+        rentals = self.__book_repo.getAll()
+        for x in rentals:
+            if x.book_id == book_id:
+                state = x.rentState()
+                if state["ret"] == False:
+                    return False
+        return False
+
+    def addRental(self, args):
+        if self.isAvailable(args[1]):
+            r = Rental(int(args[0]), int(args[1]), int(args[2]), datetime.strptime(args[3], "%Y-%m-%d"), datetime.strptime(args[4], "%Y-%m-%d"), datetime.strptime(args[5], "%Y-%m-%d"))
+            self.__validator.rentalValidator(r)
+            self.__rental_repo.add(r)
+        else:
+            raise LibraryException("This book is not available!")
+
+
+def testAddRent():
+    repo = Repository()
+
+    #repo.add(1, 2, 3, )
