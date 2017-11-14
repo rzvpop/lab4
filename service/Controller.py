@@ -79,6 +79,7 @@ class Controller():
     def returnBook(self, args):
         r = Rental(int(args[0]), 1, 1, date.today(), date.today(), False)
         r = self.__rental_repo.find(r)
+        self.__validator.rentalValidator(r)
         r.retDate = date.today()
 
 
