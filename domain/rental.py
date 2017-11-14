@@ -63,7 +63,7 @@ class Rental:
 
         if self.__ret_date != False:
             state["ret"] = True
-            if datetime.now() > self.__due_date:
+            if date.today() > self.__due_date:
                 state["late"] = True
 
         return state
@@ -76,5 +76,9 @@ class Rental:
 
     #schimb id cu numele
     def __str__(self):
-        return "#" + str(self.__id) + " | Book: " + str(self.__client_id) + " | Client: " + str(self.__client_id) + "\n"\
-                "| Rental date:" + self.__ren_date + " | Due date: " + self.__due_date + " | Returned on: " + self.__ret_date
+        rent_date = self.__ret_date
+        if rent_date == False:
+            rent_date = "-"
+
+        return "#" + str(self.__id) + " | Book: " + str(self.__book_id) + " | Client: " + str(self.__client_id) + "\n"\
+                "| Rental date: " + str(self.__ren_date) + " | Due date: " + str(self.__due_date) + " | Returned on: " + str(rent_date)

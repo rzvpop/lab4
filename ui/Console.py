@@ -63,6 +63,28 @@ class Console:
         self.__ctrl.updateClient(args)
         print("Client updated!")
 
+    def addRental(self):
+        id = input("Id: ")
+        b_id = input("Book id: ")
+        c_id = input("Client id: ")
+        args = [id, b_id, c_id]
+
+        self.__ctrl.addRental(args)
+        print("Book rented!")
+
+    def listRentals(self):
+        rentals = self.__ctrl.getRentals()
+
+        if len(rentals) == 0:
+            print("No clients!")
+            return
+        for x in rentals:
+            print(x, '\n')
+
+    def returnBook(self, args):
+        self.__ctrl.returnBook(args)
+        print("Book returned!")
+
     def syntaxDict(self):
         d = {
             "add_book": r"^\s*add\s*book\s*$",
@@ -73,7 +95,10 @@ class Console:
             "add_client": r"^\s*add\s*client\s*$",
             "list_clients": r"^\s*list\s*clients\s*$",
             "remove_client": r"^\s*remove\s*client\s*([0-9]+)\s*$",
-            "update_client": r"^\s*update\s*client\s*([0-9\s]+)\s*,\s*([a-zA-Z0-9\s]+)\s*",
+            "update_client": r"^\s*update\s*client\s*([0-9\s]+)\s*,\s*([a-zA-Z0-9\s]+)\s*$",
+            "add_rental": r"^\s*rent\s*book\s*$",
+            "list_rentals": r"^\s*list\s*rentals\s*$",
+            "return_book": r"^\s*return\s*([0-9]+)\s*$",
             "exit": r"^\s*exit\s*$"
         }
         return d
@@ -87,7 +112,10 @@ class Console:
              ["add_client", self.addClient, True],
              ["list_clients", self.listClients],
              ["remove_client", self.removeClient, True],
-             ["update_client", self.updateClient, True]]
+             ["update_client", self.updateClient, True],
+             ["add_rental", self.addRental, True],
+             ["list_rentals", self.listRentals, False],
+             ["return_book", self.returnBook, True]]
         return l
 
     def run(self):

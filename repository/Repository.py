@@ -31,6 +31,9 @@ class Repository:
         idx = self.__elems.index(elem)
         return self.__elems[idx]
 
+    #def findById(self, id):
+
+
     def size(self):
         return len(self.__elems)
 

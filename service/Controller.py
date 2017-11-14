@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from domain.book import Book
 from domain.client import Client
@@ -52,24 +52,67 @@ class Controller():
         self.__client_repo.upd(c)
 
     def isAvailable(self, book_id):
-        rentals = self.__book_repo.getAll()
+        rentals = self.__rental_repo.getAll()
         for x in rentals:
-            if x.book_id == book_id:
+            if x.bookId == book_id:
                 state = x.rentState()
                 if state["ret"] == False:
                     return False
-        return False
+        return True
 
     def addRental(self, args):
-        if self.isAvailable(args[1]):
-            r = Rental(int(args[0]), int(args[1]), int(args[2]), datetime.strptime(args[3], "%Y-%m-%d"), datetime.strptime(args[4], "%Y-%m-%d"), datetime.strptime(args[5], "%Y-%m-%d"))
+        if self.isAvailable(int(args[1])):
+            r = Rental(int(args[0]), int(args[1]), int(args[2]), date.today(), date.today() + timedelta(days=10), False)
             self.__validator.rentalValidator(r)
             self.__rental_repo.add(r)
         else:
             raise LibraryException("This book is not available!")
 
+    def getRentals(self):
+        return self.__rental_repo.getAll()
 
-def testAddRent():
-    repo = Repository()
+    def updateRental(self, args):
+        r = Rental(int(args[0]), int(args[1]), int(args[2]), args[3], args[4], args[5])
+        self.__validator.rentalValidator(r)
+        self.__rental_repo.upd(r)
 
-    #repo.add(1, 2, 3, )
+    def returnBook(self, args):
+        r = Rental(int(args[0]), 1, 1, date.today(), date.today(), False)
+        r = self.__rental_repo.find(r)
+        r.retDate = date.today()
+
+
+def testBook():
+    b_repo = Repository()
+
+    b_repo.add(Book(1, "Charlie and the chocolate factory", "nice storry", "Roald Dalh"))
+    b_repo.add(Book(3, "Ciresarii", "tat felu de aventuri", "Constantin Chirita"))
+
+    return b_repo
+
+def testClient():
+    c_repo = Repository()
+
+    c_repo.add(Client(2, "Sandu Ciorba"))
+    c_repo.add(Client(12, "Ada Milea"))
+
+    return c_repo
+
+def testRent():
+    b_repo = testBook()
+    c_repo = testClient()
+    r_repo = Repository()
+
+    ctrl = Controller(b_repo, c_repo, r_repo)
+
+    ctrl.addRental(["1", "4", "12"])
+    try:
+        ctrl.addRental(["2", "4", "42"])
+    except LibraryException:
+        pass
+
+    rentals = r_repo.getAll()
+
+    assert(rentals[0] == Rental(1, 4, 12, date.today(), date.today() + timedelta(days=10), False))
+
+testRent()

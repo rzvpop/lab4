@@ -1,3 +1,6 @@
+from datetime import date
+
+
 class ValidationExcention(Exception):
     pass
 
@@ -34,6 +37,16 @@ class Validator():
 
         if rental.id < 0:
             errors += "Invalid id!\n"
+        if rental.bookId < 0:
+            errors += "Invalid book id!\n"
+        if rental.clientId < 0:
+            errors += "Invalid client id!\n"
+        if not isinstance(rental.renDate, date):
+            errors += "Invalid rent date!\n"
+        if not isinstance(rental.dueDate, date):
+            errors += "Invalid due date!\n"
+        if not (isinstance(rental.retDate, date) or isinstance(rental.retDate, bool)):
+            errors += "Invalid return date!\n"
 
         if len(errors) > 0:
             raise ValidationExcention(errors)
