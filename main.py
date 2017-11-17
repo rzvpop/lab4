@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-
 from domain.book import Book
 from domain.client import Client
 from domain.rental import Rental

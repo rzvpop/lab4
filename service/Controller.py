@@ -51,7 +51,7 @@ class Controller():
         self.__validator.validateClient(c)
         self.__client_repo.upd(c)
 
-    def isAvailable(self, book_id):
+    def avlBook(self, book_id):
         rentals = self.__rental_repo.getAll()
         for x in rentals:
             if x.bookId == book_id:
@@ -61,10 +61,25 @@ class Controller():
         return True
 
     def addRental(self, args):
-        if self.isAvailable(int(args[1])):
+        if self.avlBook(int(args[1])):
+            b = Book(int(args[1]), "default", "default", "default")
+            try:
+                self.__book_repo.find(b)
+            except LibraryException:
+                raise LibraryException("Inexistent book!")
+
+            c = Client(int(args[2]), "default")
+            try:
+                self.__client_repo.find(c)
+            except LibraryException:
+                raise LibraryException("Unregistred client!")
+
             r = Rental(int(args[0]), int(args[1]), int(args[2]), date.today(), date.today() + timedelta(days=10), False)
             self.__validator.rentalValidator(r)
-            self.__rental_repo.add(r)
+            try:
+                self.__rental_repo.add(r)
+            except LibraryException:
+                raise LibraryException("There already is a rental with this id!")
         else:
             raise LibraryException("This book is not available!")
 
@@ -106,7 +121,7 @@ def testRent():
 
     ctrl = Controller(b_repo, c_repo, r_repo)
 
-    ctrl.addRental(["1", "4", "12"])
+    ctrl.addRental(["1", "3", "12"])
     try:
         ctrl.addRental(["2", "4", "42"])
     except LibraryException:
