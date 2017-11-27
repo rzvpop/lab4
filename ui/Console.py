@@ -137,12 +137,12 @@ class Console:
                             if len(matches.groups()) >= 1:
                                 try:
                                     i[1](matches.groups())
-                                except Exception as ex:
+                                except LibraryException as ex:
                                     print(ex)
                             else:
                                 try:
                                     i[1]()
-                                except Exception as ex:
+                                except LibraryException as ex:
                                     print(ex)
             if not found:
                 print("Invalid command syntax!")
