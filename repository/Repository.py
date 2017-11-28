@@ -25,7 +25,7 @@ class Repository:
         idx = self.__elems.index(elem)
         self.__elems[idx] = elem
 
-    def find(self, elem):
+    def find(self, elem: object) -> object:
         if elem not in self.__elems:
             raise RepositoryException("Inexistent element!!")
         idx = self.__elems.index(elem)

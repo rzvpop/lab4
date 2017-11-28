@@ -2,9 +2,11 @@ from datetime import date, timedelta
 from domain.book import Book
 from domain.client import Client
 from domain.rental import Rental
+from service.BookController import BookController
+from service.ClientController import ClientController
+from service.RentalController import RentalController
 from ui.Console import Console
 from repository.Repository import Repository
-from service.Controller import Controller
 
 book_repo = Repository()
 client_repo = Repository()
@@ -32,6 +34,8 @@ initBooks()
 initClients()
 initRentals()
 
-ctrl = Controller(book_repo, client_repo, rental_repo)
-cons = Console(ctrl)
+b_ctrl = BookController(book_repo)
+c_ctrl = ClientController(client_repo)
+r_ctrl = RentalController(rental_repo, book_repo, client_repo)
+cons = Console(b_ctrl, c_ctrl, r_ctrl)
 cons.run()

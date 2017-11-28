@@ -8,7 +8,7 @@ from repository.Repository import Repository
 from validation.Validator import Validator
 
 
-class Controller():
+class ItemController():
     def __init__(self, repo):
         self._repo = repo
         self._validator = Validator()

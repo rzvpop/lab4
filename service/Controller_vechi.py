@@ -99,22 +99,6 @@ class Controller():
 
     #def search(self, ):
 
-class BookController(Controller):
-    def addBook(self, args):
-        b = Book(int(args[0]), args[1], args[2], args[3])
-        self.__validator.validateBook(b)
-        self.__book_repo.add(b)
-
-    def removeBook(self, id):
-        b = Book(int(id), "default", "default", "default")
-        self.__validator.validateBook(b)
-        self.__book_repo.rem(b)
-
-    def updateBook(self, args):
-        b = Book(int(args[0]), args[1], args[2], args[3])
-        self.__validator.validateBook(b)
-        self.__book_repo.upd(b)
-
 def testBook():
     b_repo = Repository()
 

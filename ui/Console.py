@@ -4,12 +4,32 @@ from domain.exceptions import LibraryException
 
 
 class Console:
-
-    def __init__(self, ctrl):
-        self.__ctrl = ctrl
+    def __init__(self, b_ctrl, c_ctrl, r_ctrl):
+        self.__b_ctrl = b_ctrl
+        self.__c_ctrl = c_ctrl
+        self.__r_ctrl = r_ctrl
 
     def exitApp(self):
         exit(0)
+
+    def help(self):
+        cmd_str = "Commands:\n"
+
+        cmd_str += "- exit\n"
+        cmd_str += "- help\n"
+        cmd_str += "- add book\n"
+        cmd_str += "- list books\n"
+        cmd_str += "- remove book\n"
+        cmd_str += "- update book\n"
+        cmd_str += "- add client\n"
+        cmd_str += "- list clients\n"
+        cmd_str += "- remove client\n"
+        cmd_str += "- update client\n"
+        cmd_str += "- rent book\n"
+        cmd_str += "- list rentals\n"
+        cmd_str += "- return book\n"
+
+        print(cmd_str)
 
     def addBook(self):
         id = input("Id: ")
@@ -18,11 +38,11 @@ class Console:
         author = input("Author: ")
         args = [id, title, desc, author]
 
-        self.__ctrl.addBook(args)
+        self.__b_ctrl.addBook(args)
         print("Book added!")
 
     def listBooks(self):
-        books = self.__ctrl.getBooks()
+        books = self.__b_ctrl.getItems()
 
         if len(books) == 0:
             print("No books!")
@@ -31,11 +51,11 @@ class Console:
             print(x, '\n')
 
     def removeBook(self, args):
-        self.__ctrl.removeBook(int(args[0]))
+        self.__b_ctrl.removeBook(int(args[0]))
         print("Book removed!")
 
     def updateBook(self, args):
-        self.__ctrl.updateBook(args)
+        self.__b_ctrl.updateBook(args)
         print("Book updated!")
 
     def addClient(self):
@@ -43,11 +63,11 @@ class Console:
         name = input("Name: ")
         args = [id, name]
 
-        self.__ctrl.addClient(args)
+        self.__c_ctrl.addClient(args)
         print("Client added!")
 
     def listClients(self):
-        clients = self.__ctrl.getClients()
+        clients = self.__c_ctrl.getItems()
 
         if len(clients) == 0:
             print("No clients!")
@@ -56,11 +76,11 @@ class Console:
             print(x, '\n')
 
     def removeClient(self, args):
-        self.__ctrl.removeClient(args[0])
+        self.__c_ctrl.removeClient(args[0])
         print("Client removed!")
 
     def updateClient(self, args):
-        self.__ctrl.updateClient(args)
+        self.__c_ctrl.updateClient(args)
         print("Client updated!")
 
     def addRental(self):
@@ -69,11 +89,11 @@ class Console:
         c_id = input("Client id: ")
         args = [id, b_id, c_id]
 
-        self.__ctrl.addRental(args)
+        self.__r_ctrl.addRental(args)
         print("Book rented!")
 
     def listRentals(self):
-        rentals = self.__ctrl.getRentals()
+        rentals = self.__r_ctrl.getItems()
 
         if len(rentals) == 0:
             print("No clients!")
@@ -82,7 +102,7 @@ class Console:
             print(x, '\n')
 
     def returnBook(self, args):
-        self.__ctrl.returnBook(args)
+        self.__r_ctrl.returnBook(args)
         print("Book returned!")
 
     def syntaxDict(self):
@@ -99,12 +119,14 @@ class Console:
             "add_rental": r"^\s*rent\s*book\s*$",
             "list_rentals": r"^\s*list\s*rentals\s*$",
             "return_book": r"^\s*return\s*([0-9]+)\s*$",
+            "help": r"^\s*help\s*",
             "exit": r"^\s*exit\s*$"
         }
         return d
 
     def cmdList(self):
         l = [["exit", self.exitApp, False],
+             ["help", self.help, False],
              ["add_book", self.addBook, True],
              ["list_books", self.listBooks, False],
              ["remove_book", self.removeBook, True],
