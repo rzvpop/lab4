@@ -4,6 +4,7 @@ from domain.book import Book
 from domain.client import Client
 from domain.exceptions import LibraryException
 from domain.rental import Rental
+from service import Controller
 from service.Controller import ItemController
 
 

@@ -4,10 +4,11 @@ from domain.exceptions import LibraryException
 
 
 class Console:
-    def __init__(self, b_ctrl, c_ctrl, r_ctrl):
+    def __init__(self, b_ctrl, c_ctrl, r_ctrl, s_ctrl):
         self.__b_ctrl = b_ctrl
         self.__c_ctrl = c_ctrl
         self.__r_ctrl = r_ctrl
+        self.__s_ctrl = s_ctrl
 
     def exitApp(self):
         exit(0)
@@ -104,6 +105,11 @@ class Console:
     def returnBook(self, args):
         self.__r_ctrl.returnBook(args)
         print("Book returned!")
+
+    def bookSearch(self):
+        attr = input("By: ")
+        hint = input("Hint: ")
+        self.__s_ctrl.bookSearch(attr, hint)
 
     def syntaxDict(self):
         d = {

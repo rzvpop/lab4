@@ -33,7 +33,6 @@ class Repository:
 
     #def findById(self, id):
 
-
     def size(self):
         return len(self.__elems)
 
