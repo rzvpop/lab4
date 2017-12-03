@@ -10,7 +10,7 @@ from service.Controller import ItemController
 
 class RentalController(ItemController):
     def __init__(self, repo, book_repo, client_repo):
-        Controller.__init__(self, repo)
+        ItemController.__init__(self, repo)
         self.__book_repo = book_repo
         self.__client_repo = client_repo
 

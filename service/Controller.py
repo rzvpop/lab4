@@ -37,7 +37,7 @@ def testRent():
     c_repo = testClient()
     r_repo = Repository()
 
-    ctrl = Controller(b_repo, c_repo, r_repo)
+    ctrl = ItemController(b_repo, c_repo, r_repo)
 
     ctrl.addRental(["1", "3", "12"])
     try:

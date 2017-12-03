@@ -107,9 +107,20 @@ class Console:
         print("Book returned!")
 
     def bookSearch(self):
-        attr = input("By: ")
         hint = input("Hint: ")
-        self.__s_ctrl.bookSearch(attr, hint)
+        hint = hint.lower()
+        l = self.__s_ctrl.bookSearch(hint)
+
+        for x in l:
+            print(x, '\n')
+
+    def clientSearch(self):
+        hint = input("Hint: ")
+        hint = hint.lower()
+        l = self.__s_ctrl.clientSearch(hint)
+
+        for x in l:
+            print(x, '\n')
 
     def syntaxDict(self):
         d = {
@@ -125,6 +136,8 @@ class Console:
             "add_rental": r"^\s*rent\s*book\s*$",
             "list_rentals": r"^\s*list\s*rentals\s*$",
             "return_book": r"^\s*return\s*([0-9]+)\s*$",
+            "search_book": r"^\s*search\s*book\s*$",
+            "search_client": r"^\s*search\s*client\s*$",
             "help": r"^\s*help\s*",
             "exit": r"^\s*exit\s*$"
         }
@@ -143,7 +156,10 @@ class Console:
              ["update_client", self.updateClient, True],
              ["add_rental", self.addRental, True],
              ["list_rentals", self.listRentals, False],
-             ["return_book", self.returnBook, True]]
+             ["return_book", self.returnBook, True],
+             ["search_book", self.bookSearch, False],
+             ["search_client", self.clientSearch, False]
+        ]
         return l
 
     def run(self):
