@@ -14,8 +14,8 @@ client_repo = Repository()
 rental_repo = Repository()
 
 def initBooks():
-    book_repo.add(Book(1, "Infernul", "plm", "Dante"))
-    book_repo.add(Book(2, "Poezii", "misto", "Eminescu"))
+    book_repo.add(Book(2, "Infernul", "plm", "Dante"))
+    book_repo.add(Book(1, "Poezii", "misto", "Eminescu"))
     book_repo.add(Book(5, "plt", "plm", "pln"))
 
 def initClients():

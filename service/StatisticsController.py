@@ -47,3 +47,23 @@ class StatisticsController():
             return l
         else:
             raise RepositoryException("No clients found.")
+
+
+    def mostRentedBooks(self):
+        l = {}
+        rentals = self.__rental_repo.getAll()
+
+        for x in rentals:
+            if x.bookId not in l:
+                l[x.bookId] = 1
+            else:
+                l[x.bookId] += 1
+
+        nr_rentals = []
+        for x in l.keys():
+            nr_rentals.append([self.__book_repo.find(Book(x, "def", "def", "def")), l[x]])
+
+        nr_rentals.sort(key=lambda x: x[1], reverse=True)
+
+        return nr_rentals
+

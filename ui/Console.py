@@ -44,6 +44,7 @@ class Console:
 
     def listBooks(self):
         books = self.__b_ctrl.getItems()
+        books.sort(key=lambda x: x.id)
 
         if len(books) == 0:
             print("No books!")
@@ -69,6 +70,7 @@ class Console:
 
     def listClients(self):
         clients = self.__c_ctrl.getItems()
+        clients.sort(key=lambda x: x.id)
 
         if len(clients) == 0:
             print("No clients!")
@@ -95,6 +97,7 @@ class Console:
 
     def listRentals(self):
         rentals = self.__r_ctrl.getItems()
+        rentals.sort(key=lambda x: x.id)
 
         if len(rentals) == 0:
             print("No clients!")
@@ -122,6 +125,12 @@ class Console:
         for x in l:
             print(x, '\n')
 
+    def mostRentedBooks(self):
+        l = self.__s_ctrl.mostRentedBooks()
+
+        for x in l:
+            print(x[0], " " + str(x[1]) + " times" '\n')
+
     def syntaxDict(self):
         d = {
             "add_book": r"^\s*add\s*book\s*$",
@@ -138,6 +147,10 @@ class Console:
             "return_book": r"^\s*return\s*([0-9]+)\s*$",
             "search_book": r"^\s*search\s*book\s*$",
             "search_client": r"^\s*search\s*client\s*$",
+            "most_rented_b": r"^\s*most\s*rented\s*books\s*$",
+            "most_rented_a": r"^\s*most\s*rented\s*authors\s*$",
+            "most_active": r"^\s*most\s*active\s*$",
+            "late": r"^\s*late\s*$",
             "help": r"^\s*help\s*",
             "exit": r"^\s*exit\s*$"
         }
@@ -158,7 +171,8 @@ class Console:
              ["list_rentals", self.listRentals, False],
              ["return_book", self.returnBook, True],
              ["search_book", self.bookSearch, False],
-             ["search_client", self.clientSearch, False]
+             ["search_client", self.clientSearch, False],
+             ["most_rented_b", self.mostRentedBooks, False]
         ]
         return l
 
