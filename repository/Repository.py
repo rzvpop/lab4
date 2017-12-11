@@ -13,11 +13,14 @@ class Repository:
         if elem in self.__elems:
             raise RepositoryException("Existent element!!")
         self.__elems.append(elem)
+        return elem
 
     def rem(self, elem):
         if elem not in self.__elems:
             raise RepositoryException("Inexistent element!!")
+        elem = self.find(elem)
         self.__elems.remove(elem)
+        return elem
 
     def upd(self, elem):
         if elem not in self.__elems:

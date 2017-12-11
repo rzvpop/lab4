@@ -4,10 +4,11 @@ from repository.Repository import RepositoryException
 
 
 class StatisticsController():
-    def __init__(self, book_repo, client_repo, rental_repo):
+    def __init__(self, book_repo, client_repo, rental_repo, undo_ctrl):
         self.__book_repo = book_repo
         self.__client_repo = client_repo
         self.__rental_repo = rental_repo
+        self.__undo_ctrl = undo_ctrl
 
     def search(self, repo, attr, p_str, l):
         '''

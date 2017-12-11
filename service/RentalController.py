@@ -9,10 +9,11 @@ from service.Controller import ItemController
 
 
 class RentalController(ItemController):
-    def __init__(self, repo, book_repo, client_repo):
-        ItemController.__init__(self, repo)
+    def __init__(self, repo, book_repo, client_repo, undo_ctrl):
+        ItemController.__init__(self, repo, undo_ctrl)
         self.__book_repo = book_repo
         self.__client_repo = client_repo
+        self.__undo_ctrl = undo_ctrl
 
     def avlBook(self, book_id):
         rentals = self._repo.getAll()

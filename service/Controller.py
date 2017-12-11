@@ -9,9 +9,10 @@ from validation.Validator import Validator
 
 
 class ItemController():
-    def __init__(self, repo):
+    def __init__(self, repo, undo_ctrl):
         self._repo = repo
         self._validator = Validator()
+        self._undo_ctrl = undo_ctrl
 
     def getItems(self):
         return self._repo.getAll()

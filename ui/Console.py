@@ -4,11 +4,12 @@ from domain.exceptions import LibraryException
 
 
 class Console:
-    def __init__(self, b_ctrl, c_ctrl, r_ctrl, s_ctrl):
+    def __init__(self, b_ctrl, c_ctrl, r_ctrl, s_ctrl, undo_ctrl):
         self.__b_ctrl = b_ctrl
         self.__c_ctrl = c_ctrl
         self.__r_ctrl = r_ctrl
         self.__s_ctrl = s_ctrl
+        self.__undo_ctrl = undo_ctrl
 
     def exitApp(self):
         exit(0)
@@ -131,6 +132,9 @@ class Console:
         for x in l:
             print(x[0], " " + str(x[1]) + " times" '\n')
 
+    def undo(self):
+        self.__undo_ctrl.undo()
+
     def syntaxDict(self):
         d = {
             "add_book": r"^\s*add\s*book\s*$",
@@ -151,6 +155,7 @@ class Console:
             "most_rented_a": r"^\s*most\s*rented\s*authors\s*$",
             "most_active": r"^\s*most\s*active\s*$",
             "late": r"^\s*late\s*$",
+            "undo": r"^\s*undo\s*$",
             "help": r"^\s*help\s*",
             "exit": r"^\s*exit\s*$"
         }
@@ -172,7 +177,8 @@ class Console:
              ["return_book", self.returnBook, True],
              ["search_book", self.bookSearch, False],
              ["search_client", self.clientSearch, False],
-             ["most_rented_b", self.mostRentedBooks, False]
+             ["most_rented_b", self.mostRentedBooks, False],
+             ["undo", self.undo, False]
         ]
         return l
 

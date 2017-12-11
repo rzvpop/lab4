@@ -6,12 +6,14 @@ from service.BookController import BookController
 from service.ClientController import ClientController
 from service.RentalController import RentalController
 from service.StatisticsController import StatisticsController
+from service.UndoController import UndoController
 from ui.Console import Console
 from repository.Repository import Repository
 
 book_repo = Repository()
 client_repo = Repository()
 rental_repo = Repository()
+op_list = []
 
 def initBooks():
     book_repo.add(Book(2, "Infernul", "plm", "Dante"))
@@ -35,9 +37,11 @@ initBooks()
 initClients()
 initRentals()
 
-b_ctrl = BookController(book_repo)
-c_ctrl = ClientController(client_repo)
-r_ctrl = RentalController(rental_repo, book_repo, client_repo)
-s_ctrl = StatisticsController(book_repo, client_repo, rental_repo)
-cons = Console(b_ctrl, c_ctrl, r_ctrl, s_ctrl)
+undo_ctrl = UndoController(op_list)
+b_ctrl = BookController(book_repo, undo_ctrl)
+c_ctrl = ClientController(client_repo, undo_ctrl)
+r_ctrl = RentalController(rental_repo, book_repo, client_repo, undo_ctrl)
+s_ctrl = StatisticsController(book_repo, client_repo, rental_repo, undo_ctrl)
+
+cons = Console(b_ctrl, c_ctrl, r_ctrl, s_ctrl, undo_ctrl)
 cons.run()
