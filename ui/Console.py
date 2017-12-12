@@ -1,6 +1,7 @@
 import re
 
 from domain.exceptions import LibraryException
+from validation.Validator import ValidationException
 
 
 class Console:
@@ -135,6 +136,9 @@ class Console:
     def undo(self):
         self.__undo_ctrl.undo()
 
+    def redo(self):
+        self.__undo_ctrl.redo()
+
     def syntaxDict(self):
         d = {
             "add_book": r"^\s*add\s*book\s*$",
@@ -156,6 +160,7 @@ class Console:
             "most_active": r"^\s*most\s*active\s*$",
             "late": r"^\s*late\s*$",
             "undo": r"^\s*undo\s*$",
+            "redo": r"^\s*redo\s*",
             "help": r"^\s*help\s*",
             "exit": r"^\s*exit\s*$"
         }
@@ -178,7 +183,8 @@ class Console:
              ["search_book", self.bookSearch, False],
              ["search_client", self.clientSearch, False],
              ["most_rented_b", self.mostRentedBooks, False],
-             ["undo", self.undo, False]
+             ["undo", self.undo, False],
+             ["redo", self.redo, False]
         ]
         return l
 
@@ -203,6 +209,8 @@ class Console:
                                     i[1](matches.groups())
                                 except LibraryException as ex:
                                     print(ex)
+                                #except ValidationException as ex:
+                                 #   print(ex)
                             else:
                                 try:
                                     i[1]()

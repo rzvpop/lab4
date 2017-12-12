@@ -1,0 +1,4 @@
+2,   Infernul,   plm,   Dante
+1,   Poezii,   misto,   Eminescu
+5,   plt,   plm,   pln
+10,   Daca nu merge am las de faculta,   adevaraciune,   Pop Razvan-Mihai boss de boss

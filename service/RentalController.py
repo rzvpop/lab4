@@ -1,12 +1,13 @@
 from datetime import date, timedelta
 
+from copy import deepcopy
+
 from domain.book import Book
 from domain.client import Client
 from domain.exceptions import LibraryException
 from domain.rental import Rental
-from service import Controller
 from service.Controller import ItemController
-
+from service.UndoController import FunctionCall, Operation
 
 class RentalController(ItemController):
     def __init__(self, repo, book_repo, client_repo, undo_ctrl):
@@ -40,23 +41,28 @@ class RentalController(ItemController):
 
             r = Rental(int(args[0]), int(args[1]), int(args[2]), date.today(), date.today() + timedelta(days=10), False)
             self._validator.rentalValidator(r)
-            try:
-                self._repo.add(r)
-            except LibraryException:
-                raise LibraryException("There already is a rental with this id!")
+            self._repo.add(r)
         else:
             raise LibraryException("This book is not available!")
 
     def getRentals(self):
         return self._repo.getAll()
 
-    def updateRental(self, args):
+    def updateRental(self, args, recForUndo = True):
         r = Rental(int(args[0]), int(args[1]), int(args[2]), args[3], args[4], args[5])
         self._validator.rentalValidator(r)
         self._repo.upd(r)
 
-    def returnBook(self, args):
+    def returnBook(self, args, recForUndo = True):
         r = Rental(int(args[0]), 1, 1, date.today(), date.today(), False)
         r = self._repo.find(r)
+        old_r = deepcopy(self._repo.find(r))
         self._validator.rentalValidator(r)
         r.retDate = date.today()
+        self._repo.upd(r)
+
+        if recForUndo == True:
+            undo = FunctionCall(self.updateRental, [old_r.id, old_r.bookId, old_r.clientId, old_r.renDate, old_r.dueDate, old_r.retDate], False)
+            redo = FunctionCall(self.updateRental, [r.id, r.bookId, r.clientId, r.renDate, r.dueDate, r.retDate], False)
+            operation = Operation(redo, undo)
+            self._undo_ctrl.recordOp(operation)

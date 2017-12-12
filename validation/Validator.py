@@ -1,7 +1,7 @@
 from datetime import date
 
 
-class ValidationExcention(Exception):
+class ValidationException(Exception):
     pass
 
 
@@ -19,7 +19,7 @@ class Validator():
             errors += "Invalid author!\n"
 
         if len(errors) > 0:
-            raise ValidationExcention(errors)
+            raise ValidationException(errors)
 
     def validateClient(self, client):
         errors = ""
@@ -30,7 +30,7 @@ class Validator():
             errors += "Invalid name!\n"
 
         if len(errors) > 0:
-            raise ValidationExcention(errors)
+            raise ValidationException(errors)
 
     def rentalValidator(self, rental):
         errors = ""
@@ -49,4 +49,4 @@ class Validator():
             errors += "Invalid return date!\n"
 
         if len(errors) > 0:
-            raise ValidationExcention(errors)
+            raise ValidationException(errors)

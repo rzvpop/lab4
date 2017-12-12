@@ -17,7 +17,11 @@ class UndoController():
         return False
 
     def redo(self):
-        pass
+        if self.__index != len(self.__op_list) - 1:
+            self.__index += 1
+            self.__op_list[self.__index].redo()
+            return True
+        return False
 
 class FunctionCall:
     def __init__(self, functionRef, *parameters):
